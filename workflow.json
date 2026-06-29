@@ -1,0 +1,60 @@
+{
+  "name": "Lead Capture — Typeform to Google Sheets to Gmail",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "lead-capture",
+        "responseMode": "onReceived"
+      },
+      "id": "1",
+      "name": "Typeform Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": "YOUR_GOOGLE_SHEET_ID",
+        "sheetName": "Leads",
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "First name": "={{ $json[\"form_response\"][\"answers\"][0][\"text\"] }}",
+            "Last name": "={{ $json[\"form_response\"][\"answers\"][1][\"text\"] }}",
+            "Email": "={{ $json[\"form_response\"][\"answers\"][2][\"email\"] }}",
+            "Company": "={{ $json[\"form_response\"][\"answers\"][3][\"text\"] }}"
+          }
+        }
+      },
+      "id": "2",
+      "name": "Google Sheets",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "sendTo": "your@email.com",
+        "subject": "=New Lead: {{ $json[\"First name\"] }} {{ $json[\"Last name\"] }}",
+        "message": "=<b>New Lead!</b><br><br><b>Name:</b> {{ $json[\"First name\"] }} {{ $json[\"Last name\"] }}<br><b>Email:</b> {{ $json[\"Email\"] }}<br><b>Company:</b> {{ $json[\"Company\"] }}"
+      },
+      "id": "3",
+      "name": "Gmail",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2,
+      "position": [680, 300]
+    }
+  ],
+  "connections": {
+    "Typeform Trigger": {
+      "main": [[{"node": "Google Sheets", "type": "main", "index": 0}]]
+    },
+    "Google Sheets": {
+      "main": [[{"node": "Gmail", "type": "main", "index": 0}]]
+    }
+  },
+  "active": true,
+  "settings": {}
+}
