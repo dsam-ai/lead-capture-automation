@@ -31,7 +31,7 @@ Subject: New Lead: {First Name} {Last Name}
 
 🔔 New Lead!
 
-Name:    Dilovar Samiev
+Name:    Dilovar Sam
 Email:   dilovar@example.com
 Company: Acme Corp
 ```
@@ -53,7 +53,7 @@ Company: Acme Corp
 
 ## About
 
-Built by **Dilovar Samiev** — AI & Automation Freelancer  
+Built by **Dilovar Sam** — AI & Automation Freelancer  
 Specializing in n8n, Zapier, Make, and API integrations  
 📍 Houston, TX | MS Computer Science, North American University  
 🔗 [Upwork Profile](https://www.upwork.com)
